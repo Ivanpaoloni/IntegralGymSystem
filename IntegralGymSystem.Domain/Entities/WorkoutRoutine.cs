@@ -11,7 +11,7 @@ namespace IntegralGymSystem.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<WorkoutRoutineExercise> Exercises { get; set; } = new List<WorkoutRoutineExercise>();
+        public virtual ICollection<WorkoutRoutineExercise> WorkoutRoutineExercises { get; set; } = new List<WorkoutRoutineExercise>();
     }
 
 }

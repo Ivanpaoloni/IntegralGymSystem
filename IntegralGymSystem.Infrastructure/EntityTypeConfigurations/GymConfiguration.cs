@@ -10,8 +10,10 @@ namespace IntegralGymSystem.Infrastructure.EntityTypeConfigurations
         {
             builder.ToTable("Gyms", "dbo");
 
+            //Primary key 
             builder.HasKey(e => e.Id);
 
+            //Properties
             builder.Property(e => e.Name).IsRequired().HasColumnType("nvarchar(100)");
             builder.Property(e => e.City).IsRequired().HasColumnType("nvarchar(100)");
             builder.Property(e => e.Country).IsRequired().HasColumnType("nvarchar(100)");

@@ -8,8 +8,10 @@ namespace IntegralGymSystem.Infrastructure.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            //Primary key 
             builder.HasKey(u => u.Id);
 
+            //Properties
             builder.Property(u => u.GymId).IsRequired(false); // null for SuperAdmin
 
             builder.HasMany(u => u.Memberships)

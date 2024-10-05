@@ -10,12 +10,12 @@ namespace IntegralGymSystem.Infrastructure.EntityTypeConfigurations
         {
             builder.ToTable("Memberships", "dbo");
 
+            //Primary key 
             builder.HasKey(m => m.Id);
 
+            //Properties
             builder.Property(m => m.GymId).IsRequired();
-
             builder.Property(m => m.UserId).IsRequired();
-
             builder.Property(m => m.Type).IsRequired().HasColumnType("smallint");
 
             builder.HasOne(m => m.Gym)

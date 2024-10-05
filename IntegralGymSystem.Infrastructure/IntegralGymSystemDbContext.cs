@@ -12,8 +12,12 @@ namespace IntegralGymSystem.Infrastructure
             : base(options)
         {
         }
-        public DbSet<Gym> Gyms { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Membership> Memberships { get; set; }
+        public DbSet<Gym> Gyms { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<WorkoutRoutine> workoutRoutines { get; set; }
+        public DbSet<WorkoutRoutineExercise> workoutRoutineExercises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
