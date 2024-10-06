@@ -1,5 +1,4 @@
 ﻿using IntegralGymSystem.Contracts.Services;
-using IntegralGymSystem.Contracts.UnitOfWork;
 using IntegralGymSystem.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +31,4 @@ public class GymController : ControllerBase
     {
         return await _gymService.CreateGymAsync(gym, saveChanges: true);
     }
-
-    //Otros métodos para Update y Delete
 }

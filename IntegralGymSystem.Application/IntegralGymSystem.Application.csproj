@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IntegralGymSystem.Infrastructure\IntegralGymSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\IntegralGymSystem.Services\IntegralGymSystem.Services.csproj" />
+  </ItemGroup>
+
 </Project>

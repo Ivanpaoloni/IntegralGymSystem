@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace IntegralGymSystem.Domain
+namespace IntegralGymSystem.Domain.Enums
 {
     public enum MembershipTypeEnum
     {

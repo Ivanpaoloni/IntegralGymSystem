@@ -1,25 +1,33 @@
-using IntegralGymSystem.Contracts.UnitOfWork;
-using IntegralGymSystem.Infrastructure; // Asegúrate de tener el espacio de nombres correcto
+using IntegralGymSystem.Application.Extensions;
+using IntegralGymSystem.Infrastructure.Extensions;
 using IntegralGymSystem.Services.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura el DbContext
-builder.Services.AddDbContext<IntegralGymSystemDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Cambia "DefaultConnection" por tu cadena de conexión real
+//Get connectionString of appsettings
+string? connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+                         ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrEmpty(connectionString)) throw new InvalidOperationException("La cadena de conexión no puede ser nula o vacía.");
+
+builder.Services.AddIntegralGymSystemRepository(connectionString);
 
 // Add services to the container.
 builder.Services.AddIntegralGymSystemServices();
+builder.Services.AddIntegralGymSystemApplicationManagers();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Reemplaza 'UnitOfWork' con el nombre real de tu clase
-
-
 var app = builder.Build();
+
+// Configure Roles
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await services.ConfigureRoles();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -30,5 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllers();
+
 app.Run();

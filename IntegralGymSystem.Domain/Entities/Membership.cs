@@ -1,4 +1,5 @@
-﻿using IntegralGymSystem.Domain.Interfaces;
+﻿using IntegralGymSystem.Domain.Enums;
+using IntegralGymSystem.Domain.Interfaces;
 
 namespace IntegralGymSystem.Domain.Entities
 {
