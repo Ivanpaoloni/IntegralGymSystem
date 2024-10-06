@@ -50,5 +50,17 @@ namespace IntegralGymSystem.Application.Managers
                 throw new ArgumentException("Error al obtener el usuario.", ex);
             }
         }
+
+        public async Task<IEnumerable<UserDto>> GetUsers()
+        {
+            try
+            {
+                return await _userService.GetUsers();
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Error al obtener los usuarios.", ex);
+            }
+        }
     }
 }

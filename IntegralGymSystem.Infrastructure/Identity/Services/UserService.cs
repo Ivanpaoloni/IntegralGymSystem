@@ -2,6 +2,11 @@
 using IntegralGymSystem.Contracts.Services;
 using IntegralGymSystem.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace IntegralGymSystem.Infrastructure.Identity.Services
 {
@@ -15,7 +20,23 @@ namespace IntegralGymSystem.Infrastructure.Identity.Services
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        public async Task<IEnumerable<UserDto>> GetUsers()
+        {
+            var users = _userManager.Users.ToList();
+            var usersDto = new List<UserDto>();
+            foreach (var user in users)
+            {
+                usersDto.Add(new UserDto
+                {
+                    UserName = user.UserName,
+                    Email = user.Email!,
+                    GymId = user.GymId,
+                    Id = user.Id,
+                    Roles = await GetRolesByUserId(user.Id)
+                });
+            }
+            return usersDto;
+        }
         public async Task<UserDto> GetUserById(Guid id)
         {
             var user = await FindUserById(id);
@@ -72,7 +93,8 @@ namespace IntegralGymSystem.Infrastructure.Identity.Services
             {
                 throw new ArgumentException(result.Errors.ToString());
             }
-            await _userManager.AddToRoleAsync(user, MembershipTypeEnum.SuperAdmin.ToString());
+
+            await _userManager.AddToRoleAsync(user, registerDto.Type.ToString());
 
             return user.Id;
         }

@@ -1,5 +1,6 @@
 ﻿using IntegralGymSystem.Contracts.Dtos.Users;
 using IntegralGymSystem.Contracts.Managers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace IntegralGymSystemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserManager _userManager;
@@ -55,6 +57,12 @@ namespace IntegralGymSystemAPI.Controllers
             {
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
+        }
+        [HttpGet]
+        [Route("/Users")]
+        public async Task<IEnumerable<UserDto>> GetUsers()
+        {
+            return await _userManager.GetUsers();
         }
 
         [HttpGet("{id}")]

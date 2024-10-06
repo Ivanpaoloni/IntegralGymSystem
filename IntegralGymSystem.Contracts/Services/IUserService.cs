@@ -8,6 +8,7 @@ namespace IntegralGymSystem.Contracts.Services
         Task<IEnumerable<string>> GetRolesByUserId(Guid id);
         Task<UserDto> GetUserByEmail(string email);
         Task<UserDto> GetUserById(Guid id);
+        Task<IEnumerable<UserDto>> GetUsers();
         Task<Guid> RegisterUserAsync(RegisterUserDto registerDto);
     }
 }

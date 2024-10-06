@@ -1,9 +1,12 @@
 ﻿using IntegralGymSystem.Contracts.Services;
 using IntegralGymSystem.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
+[Authorize(Policy = "SuperAdminOnly")] // Only admin access
 public class GymController : ControllerBase
 {
     private readonly IGymService _gymService;
