@@ -67,10 +67,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("SuperAdminOnly", policy => policy.RequireRole(MembershipTypeEnum.SuperAdmin.ToString()));
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole(MembershipTypeEnum.Admin.ToString()));
-    options.AddPolicy("InstructorOnly", policy => policy.RequireRole(MembershipTypeEnum.Instructor.ToString()));
-    options.AddPolicy("MemberOnly", policy => policy.RequireRole(MembershipTypeEnum.Member.ToString()));
+    options.AddPolicy("SuperAdminOnly", policy => policy.RequireRole(RoleEnum.SuperAdmin.ToString()));
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole(RoleEnum.Admin.ToString()));
+    options.AddPolicy("InstructorOnly", policy => policy.RequireRole(RoleEnum.Instructor.ToString()));
+    options.AddPolicy("MemberOnly", policy => policy.RequireRole(RoleEnum.Member.ToString()));
 });
 
 builder.Services.AddIntegralGymSystemRepository(connectionString);

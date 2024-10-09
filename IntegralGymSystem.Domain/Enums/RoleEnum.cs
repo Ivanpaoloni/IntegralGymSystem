@@ -2,7 +2,7 @@
 
 namespace IntegralGymSystem.Domain.Enums
 {
-    public enum MembershipTypeEnum
+    public enum RoleEnum
     {
         [Description("Super Administrador")]
         SuperAdmin = 1,

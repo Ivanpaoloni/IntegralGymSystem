@@ -4,6 +4,7 @@ using IntegralGymSystem.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegralGymSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(IntegralGymSystemDbContext))]
-    partial class IntegralGymSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241009031512_CustomersTableAndRelations")]
+    partial class CustomersTableAndRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,66 +134,26 @@ namespace IntegralGymSystem.Infrastructure.Migrations
                     b.ToTable("Gyms", "dbo");
                 });
 
-            modelBuilder.Entity("IntegralGymSystem.Domain.Entities.GymPricing", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("DayPassPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("FunctionalTrainingPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("GymId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("ThreeDaysPerWeekPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("UnlimitedPassPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GymId");
-
-                    b.ToTable("GymPricings", "dbo");
-                });
-
             modelBuilder.Entity("IntegralGymSystem.Domain.Entities.Membership", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("GymId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<short>("Type")
+                        .HasColumnType("smallint");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("GymId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Memberships", "dbo");
                 });
@@ -471,18 +434,7 @@ namespace IntegralGymSystem.Infrastructure.Migrations
                     b.HasOne("IntegralGymSystem.Domain.Entities.Gym", "Gym")
                         .WithMany("Customers")
                         .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Gym");
-                });
-
-            modelBuilder.Entity("IntegralGymSystem.Domain.Entities.GymPricing", b =>
-                {
-                    b.HasOne("IntegralGymSystem.Domain.Entities.Gym", "Gym")
-                        .WithMany("GymPricings")
-                        .HasForeignKey("GymId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Gym");
@@ -490,19 +442,17 @@ namespace IntegralGymSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("IntegralGymSystem.Domain.Entities.Membership", b =>
                 {
-                    b.HasOne("IntegralGymSystem.Domain.Entities.Customer", "Customer")
-                        .WithMany("Memberships")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("IntegralGymSystem.Domain.Entities.Gym", "Gym")
-                        .WithMany()
+                        .WithMany("Memberships")
                         .HasForeignKey("GymId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("IntegralGymSystem.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany("Memberships")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Gym");
                 });
@@ -597,16 +547,11 @@ namespace IntegralGymSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IntegralGymSystem.Domain.Entities.Customer", b =>
-                {
-                    b.Navigation("Memberships");
-                });
-
             modelBuilder.Entity("IntegralGymSystem.Domain.Entities.Gym", b =>
                 {
                     b.Navigation("Customers");
 
-                    b.Navigation("GymPricings");
+                    b.Navigation("Memberships");
 
                     b.Navigation("WorkoutRoutines");
                 });
@@ -614,6 +559,11 @@ namespace IntegralGymSystem.Infrastructure.Migrations
             modelBuilder.Entity("IntegralGymSystem.Domain.Entities.WorkoutRoutine", b =>
                 {
                     b.Navigation("WorkoutRoutineExercises");
+                });
+
+            modelBuilder.Entity("IntegralGymSystem.Infrastructure.Identity.ApplicationUser", b =>
+                {
+                    b.Navigation("Memberships");
                 });
 #pragma warning restore 612, 618
         }

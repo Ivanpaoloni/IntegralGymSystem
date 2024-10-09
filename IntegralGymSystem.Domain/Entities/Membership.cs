@@ -8,7 +8,12 @@ namespace IntegralGymSystem.Domain.Entities
         public Guid Id { get; set; }
         public Guid GymId { get; set; }
         public Guid UserId { get; set; }
-        public MembershipTypeEnum Type { get; set; }
-        public virtual Gym Gym { get; set; }
+        public Guid CustomerId { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public decimal Amount { get; set; }
+        public virtual Customer Customer { get; set; } = new Customer();
+        public virtual Gym Gym { get; set; } = new Gym();
     }
 }

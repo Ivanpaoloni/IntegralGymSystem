@@ -6,7 +6,7 @@ namespace IntegralGymSystem.Contracts.Dtos.Users
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public MembershipTypeEnum Type { get; set; }
+        public RoleEnum Type { get; set; }
         public Guid? GymId { get; set; } // GymId opcional para SuperAdmin
     }
 

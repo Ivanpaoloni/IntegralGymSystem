@@ -61,7 +61,7 @@ namespace IntegralGymSystem.Infrastructure.Identity.Services
             {
                 Id = user.Id,
                 Email = user.Email!,
-                GymId = user.GymId,
+                GymId = user.GymId, 
                 UserName = user.UserName!,
                 Roles = await GetRolesByUser(user)
             };

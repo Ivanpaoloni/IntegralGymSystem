@@ -8,20 +8,22 @@ namespace IntegralGymSystem.Infrastructure.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Membership> builder)
         {
+            // Table
             builder.ToTable("Memberships", "dbo");
 
-            //Primary key 
+            // Primary Key
             builder.HasKey(m => m.Id);
 
-            //Properties
-            builder.Property(m => m.GymId).IsRequired();
-            builder.Property(m => m.UserId).IsRequired();
-            builder.Property(m => m.Type).IsRequired().HasColumnType("smallint");
+            // Properties
+            builder.Property(m => m.PaymentDate).IsRequired().HasColumnType("datetime2");
+            builder.Property(m => m.StartDate).IsRequired().HasColumnType("datetime2");
+            builder.Property(m => m.EndDate).IsRequired().HasColumnType("datetime2");
+            builder.Property(m => m.Amount).IsRequired().HasColumnType("decimal(18,2)");
 
-            builder.HasOne(m => m.Gym)
-                   .WithMany(g => g.Memberships)
-                   .HasForeignKey(m => m.GymId);
+            builder.HasOne(m => m.Customer)
+                   .WithMany(c => c.Memberships)
+                   .HasForeignKey(m => m.CustomerId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
-
 }

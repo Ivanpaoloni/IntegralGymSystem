@@ -19,10 +19,10 @@ namespace IntegralGymSystem.Infrastructure.EntityTypeConfigurations
             builder.Property(e => e.Country).IsRequired().HasColumnType("nvarchar(100)");
             builder.Property(e => e.Phone).IsRequired().HasColumnType("nvarchar(20)");
 
-            builder.HasMany(e => e.Memberships)
+            builder.HasMany(e => e.Customers)
                 .WithOne(m => m.Gym)
                 .HasForeignKey(m => m.GymId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

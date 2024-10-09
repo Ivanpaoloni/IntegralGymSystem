@@ -7,7 +7,7 @@ public static class RoleConfigurationExtensions
     public static async Task ConfigureRoles(this IServiceProvider serviceProvider)
     {
         var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-        foreach (var roleName in Enum.GetNames(typeof(MembershipTypeEnum)))
+        foreach (var roleName in Enum.GetNames(typeof(RoleEnum)))
         {
             var roleExist = await RoleManager.RoleExistsAsync(roleName);
             if (!roleExist)

@@ -13,11 +13,6 @@ namespace IntegralGymSystem.Infrastructure.EntityTypeConfigurations
 
             //Properties
             builder.Property(u => u.GymId).IsRequired(false); // null for SuperAdmin
-
-            builder.HasMany(u => u.Memberships)
-            .WithOne() // No Membership navigation property
-            .HasForeignKey(m => m.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

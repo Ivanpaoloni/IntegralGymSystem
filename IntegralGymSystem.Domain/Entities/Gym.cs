@@ -11,7 +11,8 @@ namespace IntegralGymSystem.Domain.Entities
         public string Country { get; set; }
         public string Phone { get; set; }
 
-        public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
         public virtual ICollection<WorkoutRoutine> WorkoutRoutines { get; set; } = new List<WorkoutRoutine>();
+        public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+        public ICollection<GymPricing> GymPricings { get; set; } = new List<GymPricing>();
     }
 }
