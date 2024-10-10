@@ -1,4 +1,5 @@
-﻿using IntegralGymSystem.Contracts.Services;
+﻿using IntegralGymSystem.Contracts.Dtos.Gym;
+using IntegralGymSystem.Contracts.Services;
 using IntegralGymSystem.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,8 +31,14 @@ public class GymController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Guid> CreateGym(Gym gym)
+    public async Task<Guid> Post(Gym gym)
     {
         return await _gymService.CreateGymAsync(gym, saveChanges: true);
+    }
+
+    [HttpPut]
+    public async Task Put(GymDto dto)
+    {
+        await _gymService.UpdateGymAsync(dto, saveChanges: true);
     }
 }
